@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.campos.sbmongo.dto.UserDTO;
 import com.campos.sbmongoDb.domain.User;
+import com.campos.sbmongoDb.dto.UserDTO;
 import com.campos.sbmongoDb.services.UserService;
 
 @RestController

@@ -1,4 +1,4 @@
-package com.campos.sbmongo.config;
+package com.campos.sbmongoDb.config;
 
 import java.util.Arrays;
 

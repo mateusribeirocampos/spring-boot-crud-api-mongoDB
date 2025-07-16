@@ -1,4 +1,4 @@
-package com.campos.sbmongo.dto;
+package com.campos.sbmongoDb.dto;
 
 import java.io.Serializable;
 

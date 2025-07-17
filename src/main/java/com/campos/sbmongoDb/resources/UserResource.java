@@ -56,8 +56,9 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<User> update(@RequestBody UserCreateDTO objDto, @PathVariable String id) {
+	public ResponseEntity<Void> update(@RequestBody UserCreateDTO objDto, @PathVariable String id) {
 		User obj = service.fromDTO(objDto);
+		System.out.println("UserResource - New data from updated obj =" + obj);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();

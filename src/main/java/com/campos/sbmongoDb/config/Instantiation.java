@@ -25,7 +25,7 @@ public class Instantiation implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
 		userRepo.deleteAll();
@@ -40,6 +40,10 @@ public class Instantiation implements CommandLineRunner {
 		
 		userRepo.saveAll(Arrays.asList(maria, alex, bob));
 		postRepo.saveAll(Arrays.asList(post1, post2));
+		
+		System.out.println("Dados de teste inseridos com sucesso!");
+		System.out.println("Usuários criados: " + userRepo.count());
+		System.out.println("Posts criados: " + postRepo.count());
 	}
 
 	

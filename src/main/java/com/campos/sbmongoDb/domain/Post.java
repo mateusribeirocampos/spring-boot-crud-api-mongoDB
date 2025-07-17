@@ -7,7 +7,7 @@ import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document(collection = "post")
 public class Post implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

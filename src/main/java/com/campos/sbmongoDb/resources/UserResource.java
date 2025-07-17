@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.campos.sbmongoDb.domain.User;
+import com.campos.sbmongoDb.dto.UserCreateDTO;
 import com.campos.sbmongoDb.dto.UserDTO;
 import com.campos.sbmongoDb.services.UserService;
 
@@ -38,10 +39,13 @@ public class UserResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody UserDTO objDTO) {
+	public ResponseEntity<Void> insert(@RequestBody UserCreateDTO objDTO) {
 		User obj = service.fromDTO(objDTO);
+		System.out.println(obj);
 		obj = service.insert(obj);
+		System.out.println(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		System.out.println(uri);
 		return ResponseEntity.created(uri).build();
 	}
 

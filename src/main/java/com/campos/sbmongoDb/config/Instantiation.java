@@ -46,7 +46,11 @@ public class Instantiation implements CommandLineRunner {
 		System.out.println("Dados de teste inseridos com sucesso!");
 		System.out.println("Usuários criados: " + userRepo.count());
 		System.out.println("Posts criados: " + postRepo.count());
+		
+		maria.getPosts().addAll(Arrays.asList(post1, post2));
+		
+		userRepo.save(maria);
+		
 	}
 
-	
 }

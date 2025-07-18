@@ -1,7 +1,10 @@
 package com.campos.sbmongoDb.dto;
 
-public class UserCreateDTO {
+import java.io.Serializable;
+
+public class UserCreateDTO implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String email;
 	private String password;

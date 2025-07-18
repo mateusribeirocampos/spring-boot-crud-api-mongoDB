@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.campos.sbmongoDb.domain.Post;
 import com.campos.sbmongoDb.domain.User;
+import com.campos.sbmongoDb.dto.AuthorDTO;
 import com.campos.sbmongoDb.repository.PostRepository;
 import com.campos.sbmongoDb.repository.UserRepository;
 
@@ -35,10 +36,11 @@ public class Instantiation implements CommandLineRunner {
 		User alex = new User(null, "Alex Green", "alex.green@gmail.com", "123456");
 		User bob = new User(null, "Bob Grey", "bob.grey@gmail.com", "123456");
 		
-		Post post1 = new Post(null, sdf.parse("21/03/2018 09:14:12"), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", maria);
-		Post post2 = new Post(null, sdf.parse("23/03/2018 06:55:42"), "Bom dia", "Acordei feliz hoje!", maria);
-		
 		userRepo.saveAll(Arrays.asList(maria, alex, bob));
+		
+		Post post1 = new Post(null, sdf.parse("21/03/2018 09:14:12"), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
+		Post post2 = new Post(null, sdf.parse("23/03/2018 06:55:42"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
+		
 		postRepo.saveAll(Arrays.asList(post1, post2));
 		
 		System.out.println("Dados de teste inseridos com sucesso!");

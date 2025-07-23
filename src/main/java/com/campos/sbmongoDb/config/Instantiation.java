@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.campos.sbmongoDb.domain.Post;
 import com.campos.sbmongoDb.domain.User;
 import com.campos.sbmongoDb.dto.AuthorDTO;
+import com.campos.sbmongoDb.dto.CommentDTO;
 import com.campos.sbmongoDb.repository.PostRepository;
 import com.campos.sbmongoDb.repository.UserRepository;
 
@@ -38,14 +39,23 @@ public class Instantiation implements CommandLineRunner {
 		
 		userRepo.saveAll(Arrays.asList(maria, alex, bob));
 		
-		Post post1 = new Post(null, sdf.parse("21/03/2018 09:14:12"), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
-		Post post2 = new Post(null, sdf.parse("23/03/2018 06:55:42"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
+		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
+		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
+		
+		CommentDTO c1 = new CommentDTO("Boa viagem mano!", sdf.parse("21/03/2018"), new AuthorDTO(alex));
+		CommentDTO c2 = new CommentDTO("Aproveite!", sdf.parse("22/03/2018"), new AuthorDTO(bob));
+		CommentDTO c3 = new CommentDTO("Tenha um otimo dia!", sdf.parse("23/03/2018"), new AuthorDTO(alex));
+		
+		post1.getComments().addAll(Arrays.asList(c1, c2));
+		post2.getComments().addAll(Arrays.asList(c3));
 		
 		postRepo.saveAll(Arrays.asList(post1, post2));
 		
 		System.out.println("Dados de teste inseridos com sucesso!");
 		System.out.println("Usuários criados: " + userRepo.count());
 		System.out.println("Posts criados: " + postRepo.count());
+		System.out.println("Comments no post1: " + post1.getComments().size());
+		System.out.println("Comments no post2: " + post2.getComments().size());
 		
 		maria.getPosts().addAll(Arrays.asList(post1, post2));
 		

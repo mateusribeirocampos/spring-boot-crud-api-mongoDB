@@ -35,8 +35,13 @@ public class DateValidator {
 		dateStr = dateStr.trim();
 
 		// get different date format (priority order)
-		String[] patterns = { "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy", "dd-MM-yyyy HH:mm:ss", "dd-MM-yyyy",
-				"yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd" };
+		String[] patterns = { 
+				"dd/MM/yyyy HH:mm:ss",
+				"dd/MM/yyyy",
+				"dd-MM-yyyy HH:mm:ss",
+				"dd-MM-yyyy",
+				"yyyy-MM-dd HH:mm:ss",
+				"yyyy-MM-dd" };
 
 		for (String pattern : patterns) {
 			try {

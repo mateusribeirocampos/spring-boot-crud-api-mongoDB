@@ -13,7 +13,7 @@ import com.campos.sbmongoDb.dto.CommentDTO;
 import com.campos.sbmongoDb.repository.PostRepository;
 import com.campos.sbmongoDb.repository.UserRepository;
 import com.campos.sbmongoDb.util.DateValidator;
-import com.campos.sbmongoDb.util.OneDateValidator;
+import com.campos.sbmongoDb.util.ThreeOrMoreDateValidator;
 
 @Configuration
 public class Instantiation implements CommandLineRunner {
@@ -29,7 +29,7 @@ public class Instantiation implements CommandLineRunner {
 		
 		try {
 			
-			OneDateValidator.testFormats();
+			ThreeOrMoreDateValidator.testFormats();
 		
 		//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		//sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -44,13 +44,13 @@ public class Instantiation implements CommandLineRunner {
 		userRepo.saveAll(Arrays.asList(maria, alex, bob));
 		System.out.println("User created with sucess!");
 		
-		Post post1 = new Post(null, OneDateValidator.parseSimpleDate("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
-		Post post2 = new Post(null, OneDateValidator.parseSimpleDate("23/03/2018"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
+		Post post1 = new Post(null, ThreeOrMoreDateValidator.parseSimpleThreeDate("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
+		Post post2 = new Post(null, ThreeOrMoreDateValidator.parseSimpleThreeDate("23/03/2018"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
 		System.out.println("Post created with sucess!");
 		
-		CommentDTO c1 = new CommentDTO("Boa viagem mano!", OneDateValidator.parseSimpleDate("21/03/2018"), new AuthorDTO(alex));
-		CommentDTO c2 = new CommentDTO("Aproveite!", OneDateValidator.parseSimpleDate("22/03/2018"), new AuthorDTO(bob));
-		CommentDTO c3 = new CommentDTO("Tenha um otimo dia!", OneDateValidator.parseSimpleDate("23/03/2018"), new AuthorDTO(alex));
+		CommentDTO c1 = new CommentDTO("Boa viagem mano!", ThreeOrMoreDateValidator.parseSimpleThreeDate("21-03-2018"), new AuthorDTO(alex));
+		CommentDTO c2 = new CommentDTO("Aproveite!", ThreeOrMoreDateValidator.parseSimpleThreeDate("22/03/2018"), new AuthorDTO(bob));
+		CommentDTO c3 = new CommentDTO("Tenha um otimo dia!", ThreeOrMoreDateValidator.parseSimpleThreeDate("23/03/2018"), new AuthorDTO(alex));
 		System.out.println("Comments created with sucess!");
 		
 		post1.getComments().addAll(Arrays.asList(c1, c2));

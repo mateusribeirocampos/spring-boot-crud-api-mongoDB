@@ -23,6 +23,7 @@ public class ModernDateValidator {
 			throw new IllegalArgumentException("Date cannot be empty or null!");
 		}
 
+		// formatDate is an array of string with the different date formats
 		String[] formatDate = { 
 				"dd/MM/yyyy",
 				"dd/MM/yyyy HH:mm:ss",
@@ -32,22 +33,33 @@ public class ModernDateValidator {
 
 		};
 
+		// for each format in formatDate, try to parse the dateStr
 		for (String checkFormatDates : formatDate) {
+			// try to parse the dateStr with the current format
 			try {
+				// Create the formatter
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern(checkFormatDates);
+				// LocalDateTime ldt will hold the parsed date
 				LocalDateTime ldt;
 
+				// If the format includes time, parse directly
 				if (checkFormatDates.contains("HH:mm:ss")) {
-					ldt = LocalDateTime.parse(dateStr, dtf);
+					// Format include hours
+					ldt = LocalDateTime.parse(dateStr, dtf);	
 				} else {
+					// If the format does not include time, append "00:00:00" to the dateStr
 					ldt = LocalDateTime.parse(dateStr + "00:00:00",
+							// add pattern hour to the format just with date
 							DateTimeFormatter.ofPattern(checkFormatDates + "HH:mm:ss"));
 				}
+				// Convert LocalDateTime to Date and return
 				return Date.from(ldt.atZone(ZoneId.of("GMT")).toInstant());
-			} catch (DateTimeParseException e) {
+			} catch (DateTimeParseException e) { 
+				// If parsing fails, continue to the next format
 				continue;
 			}
 		}
+		// If no format matched, throw an exception with a detailed message
 		throw new IllegalArgumentException(String.format("Date '%s' is not in the knowleged format"
 				+ "Format accept: dd/MM/yyyy, dd-MM-yyyy, yyyy-MM-dd" 
 				+ "(all format date can have or not HH:mm:ss)",

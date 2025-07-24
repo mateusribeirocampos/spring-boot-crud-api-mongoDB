@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -17,6 +18,7 @@ import com.campos.sbmongoDb.domain.Post;
 import com.campos.sbmongoDb.domain.User;
 import com.campos.sbmongoDb.dto.UserCreateDTO;
 import com.campos.sbmongoDb.dto.UserDTO;
+import com.campos.sbmongoDb.resources.util.URL;
 import com.campos.sbmongoDb.services.UserService;
 
 @RestController
@@ -69,6 +71,14 @@ public class UserResource {
 	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(obj.getPosts());				
+	}
+	
+	@RequestMapping(value = "/namesearch", method = RequestMethod.GET)
+	public ResponseEntity<List<User>> findByUserFirstName(@RequestParam(value = "name", defaultValue = "") String name) {
+		name = URL.decodeParam(name);
+		System.out.println(name);
+		List<User> listName = service.findByUserFirstName(name);
+		return ResponseEntity.ok().body(listName);
 	}
 	
 }

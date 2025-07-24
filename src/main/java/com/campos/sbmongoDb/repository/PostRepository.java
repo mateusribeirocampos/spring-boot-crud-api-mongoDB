@@ -9,5 +9,6 @@ import com.campos.sbmongoDb.domain.Post;
 public interface PostRepository extends MongoRepository<Post, String> {
 	
 	List<Post> findByTitleContainingIgnoreCase(String text);
+	
 
 }

@@ -57,6 +57,8 @@ public class UserService {
 		newObj.setPassword(obj.getPassword());
 	}
 	
-
-
+	public List<User> findByUserFirstName(String name) {
+		return repo.findByNameContainingIgnoreCase(name);
+	}
+	
 }

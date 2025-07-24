@@ -74,11 +74,16 @@ public class UserResource {
 	}
 	
 	@RequestMapping(value = "/namesearch", method = RequestMethod.GET)
-	public ResponseEntity<List<User>> findByUserFirstName(@RequestParam(value = "name", defaultValue = "") String name) {
+	public ResponseEntity<List<UserDTO>> findByUserFirstName(@RequestParam(value = "name", defaultValue = "") String name) {
 		name = URL.decodeParam(name);
+		// user list by name
+		List<User> users = service.findByUserFirstName(name);
 		System.out.println(name);
-		List<User> listName = service.findByUserFirstName(name);
-		return ResponseEntity.ok().body(listName);
+		
+		// userDTO list from user list
+		List<UserDTO> userDTO = users.stream().map(user -> new UserDTO(user)).collect(Collectors.toList());
+		System.out.println(userDTO);
+		return ResponseEntity.ok().body(userDTO);
 	}
 	
 }

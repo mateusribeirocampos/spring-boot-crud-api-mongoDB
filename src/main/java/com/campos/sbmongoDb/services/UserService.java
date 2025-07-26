@@ -61,4 +61,8 @@ public class UserService {
 		return repo.findByNameContainingIgnoreCase(name);
 	}
 	
+	public List<User> findByUserEmail(String email) {
+		return repo.findByEmailContainingIgnoreCase(email);
+	}
+	
 }

@@ -81,9 +81,18 @@ public class UserResource {
 		System.out.println(name);
 		
 		// userDTO list from user list
-		List<UserDTO> userDTO = users.stream().map(user -> new UserDTO(user)).collect(Collectors.toList());
+		List<UserDTO> userDTO = users.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 		System.out.println(userDTO);
 		return ResponseEntity.ok().body(userDTO);
+	}
+	
+	@RequestMapping(value = "/emailsearch", method = RequestMethod.GET)
+	public ResponseEntity<List<UserDTO>> findByUserEmail(@RequestParam(value = "email", defaultValue = "") String email) {
+	List<User> users = service.findByUserEmail(email);
+	System.out.println(email);
+	List<UserDTO> userDTO = users.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+	System.out.println(userDTO);
+	return ResponseEntity.ok().body(userDTO);
 	}
 	
 }

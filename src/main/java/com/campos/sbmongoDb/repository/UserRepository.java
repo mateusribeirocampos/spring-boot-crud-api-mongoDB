@@ -11,4 +11,7 @@ import com.campos.sbmongoDb.domain.User;
 public interface UserRepository extends MongoRepository<User, String> {
 	
 	List<User> findByNameContainingIgnoreCase(String name);
+	
+	List<User> findByEmailContainingIgnoreCase(String email);
 }
+

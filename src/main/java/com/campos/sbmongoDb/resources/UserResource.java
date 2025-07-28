@@ -57,7 +57,7 @@ public class UserResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody UserCreateDTO objDto, @PathVariable String id) {
 		User obj = service.fromDTO(objDto);
@@ -66,33 +66,43 @@ public class UserResource {
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
 	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
 		User obj = service.findById(id);
-		return ResponseEntity.ok().body(obj.getPosts());				
+		return ResponseEntity.ok().body(obj.getPosts());
 	}
-	
+
 	@RequestMapping(value = "/namesearch", method = RequestMethod.GET)
-	public ResponseEntity<List<UserDTO>> findByUserFirstName(@RequestParam(value = "name", defaultValue = "") String name) {
-		name = URL.decodeParam(name);
+	public ResponseEntity<List<UserDTO>> findByUserFirstName(
+			@RequestParam(value = "text", defaultValue = "") String text) {
+		text = URL.decodeParam(text);
 		// user list by name
-		List<User> users = service.findByUserFirstName(name);
-		System.out.println(name);
-		
+		List<User> users = service.findByUserFirstName(text);
+		System.out.println(text);
+
 		// userDTO list from user list
 		List<UserDTO> userDTO = users.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 		System.out.println(userDTO);
 		return ResponseEntity.ok().body(userDTO);
 	}
-	
+
 	@RequestMapping(value = "/emailsearch", method = RequestMethod.GET)
-	public ResponseEntity<List<UserDTO>> findByUserEmail(@RequestParam(value = "email", defaultValue = "") String email) {
-	List<User> users = service.findByUserEmail(email);
-	System.out.println(email);
-	List<UserDTO> userDTO = users.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
-	System.out.println(userDTO);
-	return ResponseEntity.ok().body(userDTO);
+	public ResponseEntity<List<UserDTO>> findByUserEmail(@RequestParam(value = "text", defaultValue = "") String text) {
+		List<User> users = service.findByUserEmail(text);
+		System.out.println(text);
+		List<UserDTO> userDTO = users.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+		System.out.println(userDTO);
+		return ResponseEntity.ok().body(userDTO);
 	}
-	
+
+	@RequestMapping(value = "/nameoremailsearch", method = RequestMethod.GET)
+	public ResponseEntity<List<UserDTO>> findByUserNameOrEmail(
+			@RequestParam(value = "text", defaultValue = "") String text) {
+		List<User> users = service.findByUserNameOrEmail(text);
+		System.out.println("Text: " + text);
+		List<UserDTO> userDTO = users.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+		System.out.println(userDTO);
+		return ResponseEntity.ok().body(userDTO);
+	}
 }

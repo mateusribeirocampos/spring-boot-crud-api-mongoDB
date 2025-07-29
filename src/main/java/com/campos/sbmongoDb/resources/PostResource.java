@@ -45,8 +45,20 @@ public class PostResource {
 		
 		keyword = URL.decodeParam(keyword);
 		authorName = URL.decodeParam(authorName);
+		
+	    // 🐛 LOGS PARA DEBUG
+	    System.out.println("=== COMPLEX SEARCH DEBUG ===");
+	    System.out.println("Keyword: " + keyword);
+	    System.out.println("Start Date String: " + startDate);
+	    System.out.println("End Date String: " + endDate);
+	    System.out.println("Author Name: '" + authorName + "'");
+	    System.out.println("Author Name Length: " + authorName.length());
 
 		List<Post> list = service.findComplexSearch(keyword, startDate, endDate, authorName);
+		
+	    System.out.println("Results found: " + list.size());
+	    System.out.println("==============================");
+		
 		return ResponseEntity.ok().body(list);
 	}
 	
@@ -57,10 +69,22 @@ public class PostResource {
 			@RequestParam(value = "maxdate", defaultValue = "") String maxDate) {
 		
 		keyword = URL.decodeParam(keyword);
-		Date min = URL.convertDate(maxDate, new Date(0));
+		Date min = URL.convertDate(minDate, new Date(0L));
 		Date max = URL.convertDate(maxDate, new Date());
 		
+	    // 🐛 LOGS PARA DEBUG
+	    System.out.println("=== CRITERIA SEARCH DEBUG ===");
+	    System.out.println("Keyword: " + keyword);
+	    System.out.println("MinDate String: " + minDate);
+	    System.out.println("MaxDate String: " + maxDate);
+	    System.out.println("MinDate Converted: " + min);
+	    System.out.println("MaxDate Converted: " + max);
+	    
 		List<Post> list = service.findCriteriaSearch(keyword, min, max);
+		
+	    System.out.println("Results found: " + list.size());
+	    System.out.println("==============================");
+		
 		return ResponseEntity.ok().body(list);
 	}
 

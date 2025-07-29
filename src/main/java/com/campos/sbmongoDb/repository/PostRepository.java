@@ -27,7 +27,14 @@ public interface PostRepository extends MongoRepository<Post, String> {
 			+ "] }")
 	List<Post> findComplexSearch(String keyword, Date startDate, Date endDate, String authorName);
 	
-	@Query("{ $and: [ { date: { $gte: ?1 } }, { date: { $lte: ?2 } } , { $or: [ { 'title': { $regex: ?0, $options: 'i'} }, { 'body': { $regex: ?1, $options: 'i'} }, { 'comments.text': { $regex: ?2, $options: 'i'} } ] } ] }")
+	@Query("{ $and: [ " +
+		       "{ 'date': { $gte: ?1, $lte: ?2 } }, " +
+		       "{ $or: [ " +
+		       "  { 'title': { $regex: ?0, $options: 'i' } }, " +
+		       "  { 'body': { $regex: ?0, $options: 'i' } }, " +
+		       "  { 'comments.text': { $regex: ?0, $options: 'i' } } " +
+		       "] } " +
+		       "] }")
 	List<Post> findCriteriaSearch(String keyword, Date minDate, Date maxDate);
 	
 }

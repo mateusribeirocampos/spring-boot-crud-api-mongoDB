@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,32 +28,25 @@ public class PostResource {
 		Post postObj = service.findById(id);
 		return ResponseEntity.ok().body(postObj);
 	}
-	
+
 	@RequestMapping(value = "/titlesearch", method = RequestMethod.GET)
 	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
 		text = URL.decodeParam(text);
 		List<Post> list = service.findByTitle(text);
 		return ResponseEntity.ok().body(list);
 	}
-	
-	@RequestMapping(value = "/titlebodysearch", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> findByTitleBodyDateAuthor(@RequestParam(value = "text", defaultValue = "") String keyword) {
+
+	@RequestMapping(value = "/complexsearch", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findComplexSearch(
+			@RequestParam(value = "keyword", defaultValue = "") String keyword,
+		    @RequestParam(value = "startDate") @DateTimeFormat(pattern = "dd/MM/yyyy") Date startDate,
+		    @RequestParam(value = "endDate") @DateTimeFormat(pattern = "dd/MM/yyyy") Date endDate,
+			@RequestParam(value = "authorname", defaultValue = "") String authorName) {
+		
 		keyword = URL.decodeParam(keyword);
-		List<Post> list = service.findByTitleBody(keyword);
-		return ResponseEntity.ok().body(list);
-	}
-	
-	@RequestMapping(value = "/authorcommentsearch", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> findByAuthorComments(@RequestParam(value = "text", defaultValue = "") String authorName, String comments) {
 		authorName = URL.decodeParam(authorName);
-		comments = URL.decodeParam(comments);
-		List<Post> list = service.findByAuthorComments(authorName, comments);
-		return ResponseEntity.ok().body(list);
-	}
-	
-	@RequestMapping(value = "/daterangesearch", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> findByDateRange(@RequestParam(value = "text", defaultValue = "") Date startDate, Date endDate) {
-		List<Post> list = service.findByDateRange(startDate, endDate);
+
+		List<Post> list = service.findComplexSearch(keyword, startDate, endDate, authorName);
 		return ResponseEntity.ok().body(list);
 	}
 

@@ -49,5 +49,19 @@ public class PostResource {
 		List<Post> list = service.findComplexSearch(keyword, startDate, endDate, authorName);
 		return ResponseEntity.ok().body(list);
 	}
+	
+	@RequestMapping(value = "/criteriasearch", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findCriteriaSearch(
+			@RequestParam(value = "keyword", defaultValue = "") String keyword,
+			@RequestParam(value = "mindate", defaultValue = "") String minDate,
+			@RequestParam(value = "maxdate", defaultValue = "") String maxDate) {
+		
+		keyword = URL.decodeParam(keyword);
+		Date min = URL.convertDate(maxDate, new Date(0));
+		Date max = URL.convertDate(maxDate, new Date());
+		
+		List<Post> list = service.findCriteriaSearch(keyword, min, max);
+		return ResponseEntity.ok().body(list);
+	}
 
 }

@@ -23,10 +23,15 @@ public class PostService {
 	}
 	
 	public List<Post> findByTitle(String text) {
-		return postRepo.searchTitle(text);
+		return postRepo.findByTitleContainingIgnoreCase(text);
 	}
 	
 	public List<Post> findComplexSearch(String keyword, Date startDate, Date endDate, String authorName) {
 		return postRepo.findComplexSearch(keyword, startDate, endDate, authorName);
+	}
+	
+	public List<Post> findCriteriaSearch(String keyword, Date minDate, Date maxDate) {
+		maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);
+		return postRepo.findCriteriaSearch(keyword, minDate, maxDate);		
 	}
 }

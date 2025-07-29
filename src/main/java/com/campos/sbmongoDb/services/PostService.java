@@ -1,5 +1,6 @@
 package com.campos.sbmongoDb.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,4 +26,15 @@ public class PostService {
 		return postRepo.searchTitle(text);
 	}
 	
+	public List<Post> findByTitleBody(String keyword) {
+		return postRepo.searchTitleBody(keyword);
+	}
+	
+	public List<Post> findByAuthorComments(String authorName, String comments) {
+		return postRepo.searchAuthorNameComments(authorName, comments);
+	}
+	
+	public List<Post> findByDateRange(Date startDate, Date endDate) {
+		return postRepo.searchDateRange(startDate, endDate);
+	}
 }

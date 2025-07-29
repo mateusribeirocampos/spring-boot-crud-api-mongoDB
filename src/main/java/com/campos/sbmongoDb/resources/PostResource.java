@@ -1,5 +1,6 @@
 package com.campos.sbmongoDb.resources;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,27 @@ public class PostResource {
 	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
 		text = URL.decodeParam(text);
 		List<Post> list = service.findByTitle(text);
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@RequestMapping(value = "/titlebodysearch", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findByTitleBodyDateAuthor(@RequestParam(value = "text", defaultValue = "") String keyword) {
+		keyword = URL.decodeParam(keyword);
+		List<Post> list = service.findByTitleBody(keyword);
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@RequestMapping(value = "/authorcommentsearch", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findByAuthorComments(@RequestParam(value = "text", defaultValue = "") String authorName, String comments) {
+		authorName = URL.decodeParam(authorName);
+		comments = URL.decodeParam(comments);
+		List<Post> list = service.findByAuthorComments(authorName, comments);
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@RequestMapping(value = "/daterangesearch", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findByDateRange(@RequestParam(value = "text", defaultValue = "") Date startDate, Date endDate) {
+		List<Post> list = service.findByDateRange(startDate, endDate);
 		return ResponseEntity.ok().body(list);
 	}
 
